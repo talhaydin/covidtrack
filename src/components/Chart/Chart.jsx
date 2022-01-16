@@ -35,7 +35,7 @@ const Chart = ({ data, country }) => {
   console.log(country);
 
   const singleChart = data.confirmed ? (
-    <Bar
+    <Line
       data={{
         labels: ['Infected', 'Recovered', 'Deaths'],
         datasets: [
@@ -54,7 +54,7 @@ const Chart = ({ data, country }) => {
         legend: { display: false },
         title: { display: true, text: `Current state in ${country}` },
       }}
-    ></Bar>
+    ></Line>
   ) : null;
 
   const mainChart = dailyData.length ? (
@@ -80,7 +80,9 @@ const Chart = ({ data, country }) => {
     ></Line>
   ) : null;
 
-  return <div className={styles.container}> {country ? null : mainChart}</div>;
+  return (
+    <div className={styles.container}> {country ? singleChart : mainChart}</div>
+  );
 };
 
 export default Chart;
