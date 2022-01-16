@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { fetchDaily } from '../../api';
 import { Line, Bar } from 'react-chartjs-2';
 import styles from './Chart.module.css';
@@ -23,16 +22,40 @@ ChartJS.register(
   Legend
 );
 
-const Chart = () => {
+const Chart = ({ data, country }) => {
   const [dailyData, setDailyData] = useState({});
-
   useEffect(() => {
     const fetchAPI = async () => {
       setDailyData(await fetchDaily());
     };
-    console.log(dailyData);
+
     fetchAPI();
   }, []);
+
+  console.log(country);
+
+  const singleChart = data.confirmed ? (
+    <Bar
+      data={{
+        labels: ['Infected', 'Recovered', 'Deaths'],
+        datasets: [
+          {
+            label: 'People',
+            backgroundColor: [
+              'rgba(0,0,255,0.5)',
+              'rgba(0,255,0,0.5)',
+              'rgba(255,0,0)',
+            ],
+          },
+        ],
+        data: [data.confirmed, data.recovered, data.deaths],
+      }}
+      options={{
+        legend: { display: false },
+        title: { display: true, text: `Current state in ${country}` },
+      }}
+    ></Bar>
+  ) : null;
 
   const mainChart = dailyData.length ? (
     <Line
@@ -57,7 +80,7 @@ const Chart = () => {
     ></Line>
   ) : null;
 
-  return <div className={styles.container}>{mainChart}</div>;
+  return <div className={styles.container}> {country ? null : mainChart}</div>;
 };
 
 export default Chart;

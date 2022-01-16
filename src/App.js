@@ -6,6 +6,7 @@ import { fetchData } from './api';
 export default class App extends Component {
   state = {
     data: {},
+    country: '',
   };
 
   async componentDidMount() {
@@ -14,13 +15,19 @@ export default class App extends Component {
     this.setState({ data: fetchedData });
   }
 
+  handleCountry = async (country) => {
+    const fetchedData = await fetchData(country);
+    this.setState({ data: fetchedData, country: country });
+  };
+
   render() {
     const { data } = this.state;
     return (
       <div className={styles.container}>
+        <h1>COVID 19 STATS</h1>
         <Cards data={data}></Cards>
-        <Chart></Chart>
-        <CountryPicker></CountryPicker>
+        <CountryPicker handleCountry={this.handleCountry}></CountryPicker>
+        <Chart data={data} country={this.state.country}></Chart>
       </div>
     );
   }

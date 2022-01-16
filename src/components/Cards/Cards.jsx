@@ -9,7 +9,7 @@ const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
     return <h1>Loading</h1>;
   }
   return (
-    <div style={styles.wrapper}>
+    <div style={styles.container}>
       <Grid container spacing={3} justifyContent="center">
         <Grid
           item
@@ -57,7 +57,9 @@ const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
                 separator=","
               ></CountUp>
             </Typography>
-            <Typography color="textSecondary">REAL DATE</Typography>
+            <Typography color="textSecondary">
+              {new Date(lastUpdate).toDateString()}
+            </Typography>
             <Typography variant="body2">
               Number of recovered cases of COVID-19
             </Typography>
@@ -82,7 +84,9 @@ const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
                 separator=","
               ></CountUp>
             </Typography>
-            <Typography color="textSecondary">REAL DATE</Typography>
+            <Typography color="textSecondary">
+              {new Date(lastUpdate).toDateString()}
+            </Typography>
             <Typography variant="body2">
               Number of deaths from COVID-19
             </Typography>
